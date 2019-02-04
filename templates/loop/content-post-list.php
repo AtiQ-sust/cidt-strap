@@ -9,17 +9,47 @@
 
 <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
 
+		<div class="xrow">
+			<?php
+			$thumb_size = "";
+			$row_type = $GLOBALS["row_type"];
+			//echo "ROW TYPE IS: ". $row_type;
 
-	<div class="row">
-		<div class="col-sm-4">
-			<?php echo get_the_post_thumbnail( $post->ID, 'large' ); ?>
-		</div>
-		<div class="col-sm-8">
+			switch ($row_type){
+				case 1:
+					$thumb_size = "full";
+					break;
+				case 2:
+					$thumb_size = "large";
+					break;
+				case 3:
+					$thumb_size = "large";
+					break;
+				case 4:
+					$thumb_size = "medium";
+					break;
+			}
+			if ($thumb_size=='full'){
+				//echo "Thumb_size is $thumb_size";
+				echo "<div class='row'>" . get_the_post_thumbnail( $post->ID, /*$thumb_size*/ 'full' ) . "</div>"; 
+			}
+			else{
+				//echo "Other Thumb_size is $thumb_size";
+				echo get_the_post_thumbnail( $post->ID, $thumb_size ); 
+			}
+			?>
+
+			
+		</div>		
+			<?php echo get_the_category_list(); ?>
+			
 			<header class="entry-header">
 
 				<?php the_title( sprintf( '<h2 class="entry-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ),
 				'</a></h2>' ); ?>
 
+				<?php echo get_the_tag_list('<ul class="post-tags"><li>','</li><li>','</li></ul>'); ?>
+				
 				<?php if ( 'post' == get_post_type() ) : ?>
 
 					<div class="entry-meta">
@@ -51,9 +81,6 @@
 
 			</footer><!-- .entry-footer -->
 
-			
-		</div>		
-	</div>
 	
 	
 </article><!-- #post-## -->
